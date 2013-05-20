@@ -1,0 +1,17 @@
+Dummy\BlogBundle\Entity\Blog:
+    properties:
+        title:
+            - NotBlank: { message: Это поле не может быть пустым }
+            - MinLength: { limit: 2, message: "Заголовок должен состоять как минимум из {{ limit }} символов" }
+            - MaxLength: { limit: 80, message: "Максимальная длина заголовка {{ limit }} символов" }
+        blog:
+            - NotBlank: { message: Это поле не может быть пустым }
+            - MinLength: { limit: 200, message: "Текст должен состоять как минимум из {{ limit }} символов" }
+            - MaxLength: { limit: 5000, message: "Максимальная длина текста {{ limit }} символов" }
+
+Dummy\BlogBundle\Entity\Comment:
+    properties:
+        comment:
+            - NotBlank: { message: Это поле не может быть пустым }
+            - MinLength: { limit: 2, message: "Комментарий должен состоять как минимум из {{ limit }} символов" }
+            - MaxLength: { limit: 200, message: "Максимальная длина комментария {{ limit }} символов" }

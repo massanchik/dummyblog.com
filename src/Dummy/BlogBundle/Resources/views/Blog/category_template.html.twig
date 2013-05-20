@@ -1,0 +1,7 @@
+{% for category in categories %}
+
+    <li><a href="{{ path('DummyBlogBundle_category', { 'id': category.id }) }}">{{ category.name }}</a></li>
+
+{% else %}
+    <h1>Ошибка при инициализации.</h1>
+{% endfor %}

@@ -1,0 +1,46 @@
+{% extends 'DummyBlogBundle::layout.html.twig' %}
+
+{% block title %}
+    Авторизация
+{% endblock %}
+
+{% block navigation %}
+    <ul>
+        <li><a href="{{ path('DummyBlogBundle_mainpage') }}">Главная</a></li>
+        <li><a href="{{ path('DummyBlogBundle_add') }}">Добавить запись</a></li>
+        <li class="current"><a href="{{ path('fos_user_security_login') }}">Войти</a></li>
+    </ul>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block body %}
+    <section id="login">
+        <header>
+            <h1>Авторизация пользователя</h1>
+            <p>Если у вас ещё нет аккаунта, тогда просто введите желаемое имя и пароль.</p>
+                {% if error %}
+                    <div class="error">Онибка при авторизации.</div>
+                {% endif %}
+        </header>
+
+        <form action="{{ path("fos_user_security_check") }}" method="post" class="loginform">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+            <label for="username">Имя пользователя</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+            <div class="clear"></div>
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="_password" required="required" />
+
+            <div id="lower">
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                <label for="remember_me">запомнить меня</label>
+
+                <input type="submit" id="_submit" name="_submit" value="Войти" />
+            </div>
+        </form>
+
+    </section>
+{% endblock %}

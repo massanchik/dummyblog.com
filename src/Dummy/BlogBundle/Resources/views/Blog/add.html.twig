@@ -1,0 +1,91 @@
+{% extends 'DummyBlogBundle::layout.html.twig' %}
+
+{% block title %}
+    Добавление новой записи
+{% endblock %}
+
+{% block navigation %}
+    <ul>
+        <li><a href="{{ path('DummyBlogBundle_mainpage') }}">Главная</a></li>
+        <li class="current"><a href="{{ path('DummyBlogBundle_add') }}">Добавить запись</a></li>
+        <li>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <a href="{{ path('fos_user_security_logout') }}">Выйти</a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">Войти</a>
+            {% endif %}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <section id="addblog">
+
+        <div id="message">{% if message is defined %}{{ message }}{% endif %}</div>
+
+        <header>
+            <h1>Добавить новую запись</h1>
+            <div class="error_wrapper">
+                <div class="error">{{ form_errors(form.title) }}</div>
+                <div class="error">{{ form_errors(form.blog) }}</div>
+                <div class="error">{{ form_errors(form.category) }}</div>
+            </div>
+        </header>
+        <article>
+            <form action="{{ path('DummyBlogBundle_add') }}" id="addForm" method="post" {{ form_enctype(form) }}>
+                {{ form_errors(form) }}
+
+                <div>
+                    {{ form_label(form.title) }}
+                    {{ form_widget(form.title) }}
+                </div>
+
+                <div>
+                    {{ form_label(form.blog) }}
+                    {{ form_widget(form.blog) }}
+                </div>
+
+                <div>
+                    {{ form_label(form.category) }}
+                    {{ form_widget(form.category) }}
+                </div>
+
+                {{ form_rest(form) }}
+
+                <div id="lower"><input type="submit" id="_submit" value="Опубликовать" /></div>
+
+            </form>
+        </article>
+
+    </section>
+{% endblock %}
+
+{% block footer %}
+    Footer
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('bundles/dummyblog/js/script.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $("#addForm").submit(function(){
+            var text = trimAll($('#blog_title').val());
+            if (text === '' || text.length < 2)
+            {
+                alert('Заголовок должен состоять по крайней мере из 2 символов.');
+                return false;
+            }
+            text = trimAll($('#blog_blog').val());
+            if (text === '' || text.length < 200)
+            {
+                alert('Текст должен состоять по крайней мере из 200 символов.');
+                return false;
+            }
+
+            sendForm('#addForm', '#contents', '.error_wrapper');
+            return false;
+        });
+    });
+</script>
+{% endblock %}

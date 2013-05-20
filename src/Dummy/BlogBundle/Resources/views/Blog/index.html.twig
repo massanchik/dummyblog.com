@@ -1,0 +1,35 @@
+{% extends 'DummyBlogBundle::layout.html.twig' %}
+
+{% block title %}
+    Главная страница
+{% endblock %}
+
+{% block body %}
+    <section id="homemain">
+
+        {% for blog in blogs %}
+            <article class="blog">
+                <header>
+                    <h2><a href="{{ path('DummyBlogBundle_blog_show', { 'id': blog.id }) }}">{{ blog.title }}</a></h2>
+                </header>
+
+                <div>
+                    <p>{{ blog.blog(512) }}...</p>
+                </div>
+
+                <footer class="meta">
+                    <p class="snippet"><a href="{{ path('DummyBlogBundle_blog_show', { 'id': blog.id }) }}">Читать полностью...</a></p>
+                    <p>Опубликовано <span class="highlight">{{blog.author}}</span> в {{ blog.created|date('h:i d.m.Y') }}</p>
+
+                </footer>
+            </article>
+        {% else %}
+            <h1 id="header1">В данной категории записей не найдено.</h1>
+        {% endfor %}
+
+    </section>
+{% endblock %}
+
+{% block footer %}
+    Footer
+{% endblock %}

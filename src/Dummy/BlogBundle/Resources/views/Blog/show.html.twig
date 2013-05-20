@@ -1,0 +1,92 @@
+{% extends 'DummyBlogBundle::layout.html.twig' %}
+
+{% block navigation %}
+    <ul>
+        <li><a href="{{ path('DummyBlogBundle_mainpage') }}">Главная</a></li>
+        <li><a href="{{ path('DummyBlogBundle_add') }}">Добавить запись</a></li>
+        <li>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <a href="{{ path('fos_user_security_logout') }}">Выйти</a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">Войти</a>
+            {% endif %}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block title %}
+    {{ blog.title }}
+{% endblock %}
+
+{% block body %}
+    <section id="single">
+
+        <div id="message">{% if message is defined %}{{ message }}{% endif %}</div>
+
+        <article class="blog">
+            <header>
+                <div class="date"><time datetime="{{ blog.created|date('c') }}">{{ blog.created|date('d-m-Y') }}</time></div>
+                <h2>{{ blog.title }}</h2>
+            </header>
+            <div class="blog_text">
+
+                <p>{{ blog.blog }}</p>
+
+            </div>
+        </article>
+        <div class="clear"></div>
+
+        <article class="blog">
+            <div id="lower">
+                <div class="error_wrapper">
+                    <div class="comment_error">{{ form_errors(form.comment) }}</div>
+                </div>
+                <form action="{{ path('DummyBlogBundle_blog_show', { 'id' : blog.id }) }}" id="commentForm" method="post" {{ form_enctype(form) }}>
+                    {{ form_errors(form) }}
+
+                    <div>
+                        {{ form_label(form.comment) }}
+                        {{ form_widget(form.comment) }}
+                        <input type="hidden" name="blogid" value="{{ blog.id }}" />
+                        {{ form_rest(form) }}
+                        <input type="submit" id="_submit" value="Ответить" />
+                    </div>
+
+                </form>
+            </div>
+        </article>
+        <div class="clear"></div>
+
+        <section class="comments" id="comments">
+            <section class="previous-comments">
+                <h3>Комментарии</h3>
+                {% include 'DummyBlogBundle:Comment:comments.html.twig' with { 'comments': comments } %}
+            </section>
+        </section>
+
+    </section>
+{% endblock %}
+
+{% block footer %}
+    Footer
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('bundles/dummyblog/js/script.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#commentForm").submit(function(){
+
+                var text = trimAll($('#comment_comment').val());
+                if (text === '' || text.length < 200)
+                {
+                    alert('Текст должен состоять по крайней мере из 200 символов.');
+                    return false;
+                }
+                sendForm('#commentForm', '#lower', '.error_wrapper');
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

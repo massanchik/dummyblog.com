@@ -1,0 +1,37 @@
+{% extends '::main.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/dummyblog/css/dummy.css') }}">
+{% endblock %}
+
+{% block navigation %}
+    <ul>
+        <li class="current"><a href="{{ path('DummyBlogBundle_mainpage') }}">Главная</a></li>
+        <li><a href="{{ path('DummyBlogBundle_add') }}">Добавить запись</a></li>
+        <li>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <a href="{{ path('fos_user_security_logout') }}">Выйти</a>
+        {% else %}
+            <a href="{{ path('fos_user_security_login') }}">Войти</a>
+        {% endif %}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block sidebar %}
+    <div class="sb-block categories-block">
+        <h2>Категории</h2>
+        <ul>
+            {% block categories %}
+
+                {% render 'DummyBlogBundle:Blog:getCategories' %}
+
+            {% endblock %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    Footer
+{% endblock %}

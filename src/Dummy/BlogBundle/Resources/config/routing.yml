@@ -1,0 +1,25 @@
+DummyBlogBundle_mainpage:
+    pattern:  /
+    defaults: { _controller: DummyBlogBundle:Blog:index }
+    requirements:
+        _method:  GET
+
+DummyBlogBundle_add:
+    pattern:  /add
+    defaults: { _controller: DummyBlogBundle:Blog:add }
+    requirements:
+        _method:  GET|POST
+
+DummyBlogBundle_blog_show:
+    pattern:  /{id}
+    defaults: { _controller: DummyBlogBundle:Blog:show }
+    requirements:
+        _method:  GET|POST
+        id: \d+
+
+DummyBlogBundle_category:
+    pattern:  /category/{id}
+    defaults: { _controller: DummyBlogBundle:Blog:category }
+    requirements:
+        _method:  GET
+        id: \d+
