@@ -17,3 +17,5 @@ d32de4,::1,GET,http://localhost/DummyBlog.com/web/app_dev.php/,1369062966,b21ad5
 c74e21,::1,GET,http://localhost/DummyBlog.com/web/app_dev.php/logout,1369062968,
 06a337,::1,GET,http://localhost/DummyBlog.com/web/app_dev.php/,1369062969,
 1840f2,::1,GET,http://localhost/DummyBlog.com/web/app_dev.php/,1369062969,06a337
+eea5bd,::1,GET,http://localhost/DummyBlog.com/web/app_dev.php/,1369063833,
+dd6128,::1,GET,http://localhost/DummyBlog.com/web/app_dev.php/,1369063833,eea5bd
